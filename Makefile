@@ -38,3 +38,5 @@ run_server:
 	sudo env/bin/python main.py
 
 
+route_todo:
+	sed -i -e '/### Handler index\\n/q' README.md; ./check_handlers.sh >> README.md

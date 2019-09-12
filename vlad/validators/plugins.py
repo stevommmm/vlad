@@ -10,6 +10,7 @@
 # handles: /plugins/{name}/push:post
 # handles: /plugins/{name}/set:post
 
+
 async def validate_request(req):
     '''Deny all plugin interaction over TLS'''
     if req.req_target.startswith('/plugins'):
