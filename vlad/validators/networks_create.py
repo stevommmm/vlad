@@ -1,3 +1,5 @@
+# handles: /networks/create
+
 async def validate_request(req):
     '''Allow creation of networks in our OU'''
     if req.req_method == 'POST' and req.req_target == '/networks/create':

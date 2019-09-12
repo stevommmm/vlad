@@ -3,16 +3,6 @@ from . import DockerRequest
 from aiohttp import web
 import asyncio
 
-def _whitelisted_route(uri):
-    return uri.path in [
-        '/_ping',
-        '/v1.39/nodes',
-        '/v1.39/tasks',
-        '/v1.39/info',
-        '/v1.39/version',
-    ]
-
-
 async def plugin_activate(request: web.Request):
     return web.json_response({'Implements': ['authz']})
 
@@ -23,7 +13,7 @@ async def pre_docker(request: web.Request):
     req = DockerRequest(data)
 
     # We'll only deal with TLS enabled requests
-    if not req.is_tls_auth or _whitelisted_route(req.req_uri):
+    if not req.is_tls_auth:
         return web.json_response({'Allow': True})
 
     print(req)
@@ -58,7 +48,7 @@ async def post_docker(request: web.Request):
     req = DockerRequest(data)
 
     # We'll only deal with TLS enabled requests
-    if not req.is_tls_auth or _whitelisted_route(req.req_uri):
+    if not req.is_tls_auth:
         return web.json_response({'Allow': True})
 
     # print(req)

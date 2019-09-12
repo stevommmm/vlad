@@ -1,3 +1,5 @@
+# handles: /services/{id}
+
 async def validate_request(req):
     '''Allow deleting services in the OU prefix'''
     if req.req_method == 'DELETE' and req.req_target.startswith(req.OU_svc_prefix):
