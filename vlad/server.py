@@ -3,6 +3,7 @@ from . import DockerRequest
 from aiohttp import web
 import asyncio
 
+
 async def plugin_activate(request: web.Request):
     return web.json_response({'Implements': ['authz']})
 

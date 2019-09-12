@@ -6,6 +6,7 @@
 # handles: /swarm/unlockkey
 # handles: /swarm/unlock
 
+
 async def validate_request(req):
     '''Deny all swarm modifications over TLS'''
     if req.req_target.startswith('/swarm'):
