@@ -1,4 +1,4 @@
-# handles: /volumes/prune
+# handles: /volumes/prune:post
 
 
 async def validate_request(req):

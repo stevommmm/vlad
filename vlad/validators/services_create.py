@@ -1,4 +1,4 @@
-# handles: /services/create
+# handles: /services/create:post
 
 
 async def validate_request(req):

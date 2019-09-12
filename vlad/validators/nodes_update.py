@@ -1,4 +1,4 @@
-# handles: /nodes/{id}/update
+# handles: /nodes/{id}/update:post
 
 
 async def validate_request(req):

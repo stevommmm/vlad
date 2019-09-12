@@ -1,15 +1,14 @@
-# handles: /plugins
-# handles: /plugins/privileges
-# handles: /plugins/pull
-# handles: /plugins/{name}/json
-# handles: /plugins/{name}
-# handles: /plugins/{name}/enable
-# handles: /plugins/{name}/disable
-# handles: /plugins/{name}/upgrade
-# handles: /plugins/create
-# handles: /plugins/{name}/push
-# handles: /plugins/{name}/set
-
+# handles: /plugins:get
+# handles: /plugins/privileges:get
+# handles: /plugins/pull:post
+# handles: /plugins/{name}/json:get
+# handles: /plugins/{name}:delete
+# handles: /plugins/{name}/enable:post
+# handles: /plugins/{name}/disable:post
+# handles: /plugins/{name}/upgrade:post
+# handles: /plugins/create:post
+# handles: /plugins/{name}/push:post
+# handles: /plugins/{name}/set:post
 
 async def validate_request(req):
     '''Deny all plugin interaction over TLS'''

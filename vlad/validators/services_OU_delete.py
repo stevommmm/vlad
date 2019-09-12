@@ -1,4 +1,4 @@
-# handles: /services/{id}
+# handles: /services/{id}:delete
 
 
 async def validate_request(req):

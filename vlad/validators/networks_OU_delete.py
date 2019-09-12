@@ -1,4 +1,4 @@
-# handles: /networks/{id}
+# handles: /networks/{id}:delete
 
 
 async def validate_request(req):

@@ -1,11 +1,10 @@
-# handles: /swarm
-# handles: /swarm/init
-# handles: /swarm/join
-# handles: /swarm/leave
-# handles: /swarm/update
-# handles: /swarm/unlockkey
-# handles: /swarm/unlock
-
+# handles: /swarm:get
+# handles: /swarm/init:post
+# handles: /swarm/join:post
+# handles: /swarm/leave:post
+# handles: /swarm/update:post
+# handles: /swarm/unlockkey:get
+# handles: /swarm/unlock:post
 
 async def validate_request(req):
     '''Deny all swarm modifications over TLS'''

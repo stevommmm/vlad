@@ -43,104 +43,100 @@ vampire jokes to work into readme
 
 ### Handler index
 
-- [x] [/containers/json](vlad/validators/containers.py)
-- [x] [/containers/create](vlad/validators/containers.py)
-- [x] [/containers/{id}/json](vlad/validators/containers.py)
-- [x] [/containers/{id}/top](vlad/validators/containers.py)
-- [x] [/containers/{id}/logs](vlad/validators/containers.py)
-- [x] [/containers/{id}/changes](vlad/validators/containers.py)
-- [x] [/containers/{id}/export](vlad/validators/containers.py)
-- [x] [/containers/{id}/stats](vlad/validators/containers.py)
-- [x] [/containers/{id}/resize](vlad/validators/containers.py)
-- [x] [/containers/{id}/start](vlad/validators/containers.py)
-- [x] [/containers/{id}/stop](vlad/validators/containers.py)
-- [x] [/containers/{id}/restart](vlad/validators/containers.py)
-- [x] [/containers/{id}/kill](vlad/validators/containers.py)
-- [x] [/containers/{id}/update](vlad/validators/containers.py)
-- [x] [/containers/{id}/rename](vlad/validators/containers.py)
-- [x] [/containers/{id}/pause](vlad/validators/containers.py)
-- [x] [/containers/{id}/unpause](vlad/validators/containers.py)
-- [x] [/containers/{id}/attach](vlad/validators/containers.py)
-- [x] [/containers/{id}/attach/ws](vlad/validators/containers.py)
-- [x] [/containers/{id}/wait](vlad/validators/containers.py)
-- [x] [/containers/{id}](vlad/validators/containers.py)
-- [x] [/containers/{id}/archive](vlad/validators/containers.py)
-- [x] [/containers/prune](vlad/validators/containers.py)
-- [ ] /images/json
-- [ ] /build
-- [ ] /build/prune
-- [ ] /images/create
-- [ ] /images/{name}/json
-- [ ] /images/{name}/history
-- [ ] /images/{name}/push
-- [ ] /images/{name}/tag
-- [ ] /images/{name}
-- [ ] /images/search
-- [ ] /images/prune
-- [ ] /auth
-- [x] [/info](vlad/validators/info.py)
-- [x] [/version](vlad/validators/version.py)
-- [x] [/_ping](vlad/validators/ping.py)
-- [ ] /commit
-- [ ] /events
-- [ ] /system/df
-- [ ] /images/{name}/get
-- [ ] /images/get
-- [ ] /images/load
-- [x] [/containers/{id}/exec](vlad/validators/containers.py)
-- [x] [/exec/{id}/start](vlad/validators/exec.py)
-- [x] [/exec/{id}/resize](vlad/validators/exec.py)
-- [x] [/exec/{id}/json](vlad/validators/exec.py)
-- [x] [/volumes](vlad/validators/volumes.py)
-- [x] [/volumes/create](vlad/validators/volumes_create.py)
-- [x] [/volumes/{name}](vlad/validators/volumes_OU_delete.py)
-- [x] [/volumes/{name}](vlad/validators/volumes_OU_get.py)
-- [x] [/volumes/prune](vlad/validators/volumes_prune.py)
-- [x] [/networks](vlad/validators/networks.py)
-- [x] [/networks/{id}](vlad/validators/networks_OU_get.py)
-- [x] [/networks/{id}](vlad/validators/networks_OU_delete.py)
-- [x] [/networks/create](vlad/validators/networks_create.py)
-- [ ] /networks/{id}/connect
-- [ ] /networks/{id}/disconnect
-- [ ] /networks/prune
-- [x] [/plugins](vlad/validators/plugins.py)
-- [x] [/plugins/privileges](vlad/validators/plugins.py)
-- [x] [/plugins/pull](vlad/validators/plugins.py)
-- [x] [/plugins/{name}/json](vlad/validators/plugins.py)
-- [x] [/plugins/{name}](vlad/validators/plugins.py)
-- [x] [/plugins/{name}/enable](vlad/validators/plugins.py)
-- [x] [/plugins/{name}/disable](vlad/validators/plugins.py)
-- [x] [/plugins/{name}/upgrade](vlad/validators/plugins.py)
-- [x] [/plugins/create](vlad/validators/plugins.py)
-- [x] [/plugins/{name}/push](vlad/validators/plugins.py)
-- [x] [/plugins/{name}/set](vlad/validators/plugins.py)
-- [x] [/nodes](vlad/validators/nodes.py)
-- [x] [/nodes/{id}](vlad/validators/nodes_get.py)
-- [x] [/nodes/{id}](vlad/validators/nodes_delete.py)
-- [x] [/nodes/{id}/update](vlad/validators/nodes_update.py)
-- [x] [/swarm](vlad/validators/swarm.py)
-- [x] [/swarm/init](vlad/validators/swarm.py)
-- [x] [/swarm/join](vlad/validators/swarm.py)
-- [x] [/swarm/leave](vlad/validators/swarm.py)
-- [x] [/swarm/update](vlad/validators/swarm.py)
-- [x] [/swarm/unlockkey](vlad/validators/swarm.py)
-- [x] [/swarm/unlock](vlad/validators/swarm.py)
-- [x] [/services](vlad/validators/services.py)
-- [x] [/services/create](vlad/validators/services_create.py)
-- [x] [/services/{id}](vlad/validators/services_OU_delete.py)
-- [x] [/services/{id}](vlad/validators/services_OU_get.py)
-- [x] [/services/{id}/update](vlad/validators/services_OU_update.py)
-- [x] [/services/{id}/logs](vlad/validators/services_OU_logs.py)
-- [x] [/tasks](vlad/validators/tasks.py)
-- [ ] /tasks/{id}
-- [ ] /tasks/{id}/logs
-- [x] [/secrets](vlad/validators/secrets.py)
-- [ ] /secrets/create
-- [ ] /secrets/{id}
-- [ ] /secrets/{id}/update
-- [x] [/configs](vlad/validators/configs.py)
-- [ ] /configs/create
-- [ ] /configs/{id}
-- [ ] /configs/{id}/update
-- [ ] /distribution/{name}/json
-- [ ] /session
+- [x] [/containers/json:get](vlad/validators/containers.py)
+- [x] [/containers/create:post](vlad/validators/containers.py)
+- [x] [/containers/{id}/json:get](vlad/validators/containers.py)
+- [x] [/containers/{id}/top:get](vlad/validators/containers.py)
+- [x] [/containers/{id}/logs:get](vlad/validators/containers.py)
+- [x] [/containers/{id}/changes:get](vlad/validators/containers.py)
+- [x] [/containers/{id}/export:get](vlad/validators/containers.py)
+- [x] [/containers/{id}/stats:get](vlad/validators/containers.py)
+- [x] [/containers/{id}/resize:post](vlad/validators/containers.py)
+- [x] [/containers/{id}/start:post](vlad/validators/containers.py)
+- [x] [/containers/{id}/stop:post](vlad/validators/containers.py)
+- [x] [/containers/{id}/restart:post](vlad/validators/containers.py)
+- [x] [/containers/{id}/kill:post](vlad/validators/containers.py)
+- [x] [/containers/{id}/update:post](vlad/validators/containers.py)
+- [x] [/containers/{id}/rename:post](vlad/validators/containers.py)
+- [x] [/containers/{id}/pause:post](vlad/validators/containers.py)
+- [x] [/containers/{id}/unpause:post](vlad/validators/containers.py)
+- [x] [/containers/{id}/attach:post](vlad/validators/containers.py)
+- [x] [/containers/{id}/attach/ws:get](vlad/validators/containers.py)
+- [x] [/containers/{id}/wait:post](vlad/validators/containers.py)
+- [x] [/containers/{id}:delete](vlad/validators/containers.py)
+- [x] [/containers/{id}/archive:head](vlad/validators/containers.py)
+- [x] [/containers/prune:post](vlad/validators/containers.py)
+- [ ] /images/json:get
+- [ ] /build:post
+- [ ] /build/prune:post
+- [ ] /images/create:post
+- [ ] /images/{name}/json:get
+- [ ] /images/{name}/history:get
+- [ ] /images/{name}/push:post
+- [ ] /images/{name}/tag:post
+- [ ] /images/{name}:delete
+- [ ] /images/search:get
+- [ ] /images/prune:post
+- [ ] /auth:post
+- [x] [/info:get](vlad/validators/info.py)
+- [x] [/version:get](vlad/validators/version.py)
+- [x] [/_ping:get](vlad/validators/ping.py)
+- [ ] /commit:post
+- [ ] /events:get
+- [ ] /system/df:get
+- [ ] /images/{name}/get:get
+- [ ] /images/get:get
+- [ ] /images/load:post
+- [x] [/containers/{id}/exec:post](vlad/validators/containers.py)
+- [x] [/exec/{id}/start:post](vlad/validators/exec.py)
+- [x] [/exec/{id}/resize:post](vlad/validators/exec.py)
+- [x] [/exec/{id}/json:get](vlad/validators/exec.py)
+- [x] [/volumes:get](vlad/validators/volumes.py)
+- [x] [/volumes/create:post](vlad/validators/volumes_create.py)
+- [x] [/volumes/{name}:get](vlad/validators/volumes_OU_get.py)
+- [x] [/volumes/prune:post](vlad/validators/volumes_prune.py)
+- [x] [/networks:get](vlad/validators/networks.py)
+- [x] [/networks/{id}:get](vlad/validators/networks_OU_get.py)
+- [x] [/networks/create:post](vlad/validators/networks_create.py)
+- [ ] /networks/{id}/connect:post
+- [ ] /networks/{id}/disconnect:post
+- [ ] /networks/prune:post
+- [x] [/plugins:get](vlad/validators/plugins.py)
+- [x] [/plugins/privileges:get](vlad/validators/plugins.py)
+- [x] [/plugins/pull:post](vlad/validators/plugins.py)
+- [x] [/plugins/{name}/json:get](vlad/validators/plugins.py)
+- [x] [/plugins/{name}:delete](vlad/validators/plugins.py)
+- [x] [/plugins/{name}/enable:post](vlad/validators/plugins.py)
+- [x] [/plugins/{name}/disable:post](vlad/validators/plugins.py)
+- [x] [/plugins/{name}/upgrade:post](vlad/validators/plugins.py)
+- [x] [/plugins/create:post](vlad/validators/plugins.py)
+- [x] [/plugins/{name}/push:post](vlad/validators/plugins.py)
+- [x] [/plugins/{name}/set:post](vlad/validators/plugins.py)
+- [x] [/nodes:get](vlad/validators/nodes.py)
+- [x] [/nodes/{id}:get](vlad/validators/nodes_get.py)
+- [x] [/nodes/{id}/update:post](vlad/validators/nodes_update.py)
+- [x] [/swarm:get](vlad/validators/swarm.py)
+- [x] [/swarm/init:post](vlad/validators/swarm.py)
+- [x] [/swarm/join:post](vlad/validators/swarm.py)
+- [x] [/swarm/leave:post](vlad/validators/swarm.py)
+- [x] [/swarm/update:post](vlad/validators/swarm.py)
+- [x] [/swarm/unlockkey:get](vlad/validators/swarm.py)
+- [x] [/swarm/unlock:post](vlad/validators/swarm.py)
+- [x] [/services:get](vlad/validators/services.py)
+- [x] [/services/create:post](vlad/validators/services_create.py)
+- [x] [/services/{id}:get](vlad/validators/services_OU_get.py)
+- [x] [/services/{id}/update:post](vlad/validators/services_OU_update.py)
+- [ ] /services/{id}/logs:get
+- [x] [/tasks:get](vlad/validators/tasks.py)
+- [ ] /tasks/{id}:get
+- [ ] /tasks/{id}/logs:get
+- [x] [/secrets:get](vlad/validators/secrets.py)
+- [ ] /secrets/create:post
+- [ ] /secrets/{id}:get
+- [ ] /secrets/{id}/update:post
+- [x] [/configs:get](vlad/validators/configs.py)
+- [ ] /configs/create:post
+- [ ] /configs/{id}:get
+- [ ] /configs/{id}/update:post
+- [ ] /distribution/{name}/json:get
+- [ ] /session:post

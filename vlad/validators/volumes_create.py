@@ -1,4 +1,4 @@
-# handles: /volumes/create
+# handles: /volumes/create:post
 
 
 async def validate_request(req):

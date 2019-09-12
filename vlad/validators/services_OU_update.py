@@ -1,4 +1,4 @@
-# handles: /services/{id}/update
+# handles: /services/{id}/update:post
 
 
 async def validate_request(req):

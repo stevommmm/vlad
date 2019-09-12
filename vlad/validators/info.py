@@ -1,4 +1,4 @@
-# handles: /info
+# handles: /info:get
 
 
 async def validate_request(req):

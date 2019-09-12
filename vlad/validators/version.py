@@ -1,4 +1,4 @@
-# handles: /version
+# handles: /version:get
 
 
 async def validate_request(req):

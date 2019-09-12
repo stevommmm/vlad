@@ -1,4 +1,4 @@
-# handles: /services/{id}/logs
+# handles: /services/{id}/logs:post
 
 
 async def validate_request(req):

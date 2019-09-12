@@ -1,4 +1,4 @@
-# handles: /_ping
+# handles: /_ping:get
 
 
 async def validate_request(req):

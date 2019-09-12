@@ -1,6 +1,6 @@
-# handles: /exec/{id}/start
-# handles: /exec/{id}/resize
-# handles: /exec/{id}/json
+# handles: /exec/{id}/start:post
+# handles: /exec/{id}/resize:post
+# handles: /exec/{id}/json:get
 
 # Also check containers.py for /containers/{id}/exec entrypoint
 

@@ -1,4 +1,4 @@
-# handles: /networks/create
+# handles: /networks/create:post
 
 
 async def validate_request(req):

@@ -1,5 +1,4 @@
-# handles: /secrets
-
+# handles: /secrets:get
 
 async def validate_request(req):
     '''Allow indexing secrets'''

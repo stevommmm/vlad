@@ -1,4 +1,4 @@
-# handles: /networks
+# handles: /networks:get
 
 
 async def validate_request(req):

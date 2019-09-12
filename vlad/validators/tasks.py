@@ -1,4 +1,4 @@
-# handles: /tasks
+# handles: /tasks:get
 
 
 async def validate_request(req):
