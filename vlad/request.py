@@ -4,21 +4,22 @@ from urllib.parse import urlparse
 from collections import defaultdict
 import base64
 import json
+import aiohttp
+from typing import Union
+import logging
 
 
 class DockerRequest:
     __slots__ = (
         'user',
         'user_auth_method',
-        'res_body',
-        'res_header',
-        'res_code',
         'req_method',
         'req_uri',
         'req_body',
         'req_headers',
         'req_oids',
         'req_target',
+        '_session',
     )
 
     def __init__(self, data: dict = {}):
@@ -32,14 +33,6 @@ class DockerRequest:
                 for k, v in oids.items():
                     self.req_oids[k] += v
 
-        # Response
-        if 'ResponseBody' in data:
-            self.res_body = _json_b64(data.get('ResponseBody', None))
-        if 'ResponseHeader' in data:
-            self.res_header = data['ResponseHeader']
-        if 'ResponseStatusCode' in data:
-            self.res_code = data['ResponseStatusCode']
-        # Request
         self.req_method = data.get('RequestMethod', None)
         self.req_uri = urlparse(data.get('RequestUri', ''))
 
@@ -48,6 +41,29 @@ class DockerRequest:
 
         self.req_body = _json_b64(data.get('RequestBody', None))
         self.req_headers = data.get('RequestHeaders', None)
+
+        self._session = None
+
+    async def _connect(self):
+        conn = aiohttp.UnixConnector(path='/var/run/docker.sock')
+        self._session = aiohttp.ClientSession(connector=conn)
+
+    async def _docker_resolve(self, path, uid) -> Union[str, None]:
+        if not self._session:
+            await self._connect()
+
+        async with self._session.get(f'http://localhost/{path}/{uid}') as resp:
+            data = await resp.json()
+            if 'Name' in data:
+                return data['Name']
+            return None
+
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, *excinfo):
+        if self._session:
+            await self._session.close()
 
     @property
     def is_tls_auth(self):
@@ -70,7 +86,29 @@ class DockerRequest:
         return tuple(f"/networks/{bg}" for bg in self.OU_prefix)
 
     def __repr__(self):
-        return json.dumps({x: getattr(self, x, None) for x in self.__slots__}, indent=2)
+        return f"<Request {self.req_method}:{self.req_target} ({','.join(self.req_oids['OU'])})>"
+
+    async def resolve_network(self):
+        logging.debug('Call to resolve ID')
+        url_parts = self.req_target.split('/')
+        return await self._docker_resolve('networks', url_parts[2])
+
+
+class DockerResponse(DockerRequest):
+    __slots__ = (
+        'res_body',
+        'res_header',
+        'res_code',
+    )
+
+    def __init__(self, data: dict = {}):
+        super().__init__(data)
+        self.res_body = _json_b64(data.get('ResponseBody', None))
+        self.res_header = data.get('ResponseHeader', None)
+        self.res_code = data.get('ResponseStatusCode', None)
+
+    def __repr__(self):
+        return f"<Response {self.req_method} : {self.req_target} : {','.join(self.req_oids['OU'])}>"
 
 
 def _json_b64(blob):

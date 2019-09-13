@@ -32,11 +32,12 @@ server: $(SERVER)
 client: $(CLIENT)
 
 run_docker: $(CLIENT) $(SERVER)
-	sudo dockerd --tlsverify --tlscacert=certs/ca.pem --tlscert=certs/server-cert.pem --tlskey=certs/server-key.pem -H=127.0.0.1:2376 --authorization-plugin=vlad
+	sudo dockerd --tlsverify --tlscacert=certs/ca.pem --tlscert=certs/server-cert.pem --tlskey=certs/server-key.pem -H=127.0.0.1:2376 -H unix:///var/run/docker.sock --authorization-plugin=vlad
 
 run_server:
-	sudo env/bin/python main.py
+	sudo /usr/lib/systemd/systemd-activate -l /var/run/docker/plugins/vlad.sock env/bin/python ./main.py
 
 
 route_todo:
-	sed -i -e '/### Handler index\\n/q' README.md; ./check_handlers.sh >> README.md
+	sed -i -e '/### Handler index\n/q' README.md
+	./check_handlers.sh | tee -a README.md
