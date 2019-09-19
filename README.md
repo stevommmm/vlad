@@ -32,6 +32,16 @@ Becomes the following (where `groupname` is set)
 openssl req -subj '/CN=client/OU=groupname' -new -key key.pem -out client.csr
 ```
 
+### Installation
+
+From your command line:
+
+```bash
+cd plugin/
+make plugin
+docker plugin enable vlad:latest
+```
+
 
 ##### todo
 vampire jokes to work into readme

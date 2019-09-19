@@ -2,4 +2,4 @@ env/
 certs/
 *.pyc
 stack.yaml
-docker.sh
+

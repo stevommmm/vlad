@@ -1,0 +1,37 @@
+{
+    "description": "TLS OU= based RBAC",
+    "documentation": "https://example.com",
+    "entrypoint": [
+        "/usr/local/bin/python",
+        "-u",
+        "/app/main.py"
+    ],
+    "workdir": "/app",
+    "interface": {
+        "types": [
+            "docker.authz/1.0"
+        ],
+        "socket": "vlad.sock"
+    },
+    "Mounts": [
+        {
+            "Description": "We interrogate /var/run/docker.sock for ID resolution",
+            "Source": "/var/run/docker.sock",
+            "Destination": "/var/run/docker.sock",
+            "Type": "bind",
+            "Options": [
+                "rbind"
+            ]
+        },
+        {
+            "Description": "Pass in our socket",
+            "Source": "/run/docker/plugins/",
+            "Destination": "/run/docker/plugins/",
+            "Type": "bind",
+            "Options": ["rbind", "rw"]
+        }
+    ],
+    "Network": {
+        "Type": ""
+    }
+}
