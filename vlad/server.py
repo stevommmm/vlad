@@ -2,7 +2,9 @@ from . import validators
 from . import DockerRequest, DockerResponse
 from aiohttp import web
 import asyncio
+import logging
 
+logger = logging.getLogger(__name__)
 
 async def plugin_activate(request: web.Request):
     return web.json_response({'Implements': ['authz']})
@@ -16,7 +18,7 @@ async def pre_docker(request: web.Request):
         if not req.is_tls_auth:
             return web.json_response({'Allow': True})
 
-        print(req)
+        logger.debug(req)
         try:
             tasks = []
             for m in [x for x in dir(validators) if not x.startswith('__')]:

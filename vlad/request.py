@@ -8,6 +8,8 @@ import aiohttp
 from typing import Union
 import logging
 
+logger = logging.getLogger(__name__)
+
 
 class DockerRequest:
     __slots__ = (
@@ -89,7 +91,7 @@ class DockerRequest:
         return f"<Request {self.req_method}:{self.req_target} ({','.join(self.req_oids['OU'])})>"
 
     async def resolve_network(self):
-        logging.debug('Call to resolve ID')
+        logger.debug('Call to resolve ID')
         url_parts = self.req_target.split('/')
         return await self._docker_resolve('networks', url_parts[2])
 
