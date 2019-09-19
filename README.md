@@ -142,7 +142,7 @@ vampire jokes to work into readme
 - [x] [/services/{id}/update:post](vlad/validators/services_OU_update.py)
 - [x] [/services/{id}/logs:get](vlad/validators/services_OU_logs.py)
 - [x] [/tasks:get](vlad/validators/tasks.py)
-- [ ] [/tasks/{id}:get](vlad/validators/tasks_get.py)
+- [x] [/tasks/{id}:get](vlad/validators/tasks_get.py)
 - [ ] /tasks/{id}/logs:get
 - [x] [/secrets:get](vlad/validators/secrets.py)
 - [x] [/secrets/create:post](vlad/validators/secrets_create.py)
