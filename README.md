@@ -37,9 +37,13 @@ openssl req -subj '/CN=client/OU=groupname' -new -key key.pem -out client.csr
 From your command line:
 
 ```bash
-cd plugin/
-make plugin
-docker plugin enable vlad:latest
+pushd plugin/
+make plugin  # Build the plugin on the local daemon, no push
+docker plugin enable vlad:latest  # Enable our dev plugin
+popd
+sudo ./deploy.sh  # Generate docker CA/Node/Client certificates and deploy daemon.json
+sudo ./docker.sh info  # Uses the client certificate via TLS + vlad authz
+sudo docker info  # Uses existing unix socket (which is blanket allowed by vlad)
 ```
 
 
