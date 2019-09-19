@@ -5,9 +5,10 @@ import logging
 import os
 import socket
 
-from vlad import make_app
+import vlad
 
-logging.basicConfig(level=logging.DEBUG)
+# logging.basicConfig(level=logging.DEBUG)
+vlad.logger.setLevel(logging.DEBUG)
 
 
 async def serve(app):
@@ -39,5 +40,5 @@ async def serve(app):
 
 
 if __name__ == '__main__':
-    app = make_app()
+    app = vlad.make_app()
     asyncio.run(serve(app))

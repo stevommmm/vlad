@@ -3,16 +3,21 @@
 PoC at implementing TLS Certificate `CN=` and `OU=` access to resources via an authz plugin
 
 
-*vladidators* all go in `validators/` and are responsible for:
+Request/Response *vladidators* all come from `validators/` and are responsible for:
 
 - explicitly allowing a request with a `True` value
 - explicitly denying a request with a `str` denial message to be passed to the client
 - doing absolutely nothing (`None`)
 
+Requests are **default deny**, Response is default allow.
 
-Each validator implements the following function template
+
+Each validator implements eithor/both the following function templates
 ```python
 async def validate_request(req: DockerRequest) -> Union[None, str, bool]:
+    pass
+
+async def validate_response(res: DockerResponse) -> Union[None, str]:
     pass
 ```
 
@@ -47,12 +52,13 @@ sudo docker info  # Uses existing unix socket (which is blanket allowed by vlad)
 ```
 
 
-##### todo
-vampire jokes to work into readme
+#### todo
 
-- [ ] invited in with a key (TLS Cert)
-- [ ] validators == spawn
-- [ ] mi*stake* jokes
+- [ ] work more vampire jokes to work into readme
+- [ ] echo OUs back to clients when bad prefix
+    > standardise response messages
+- [ ] certificate revocation for clients
+    > decline via `CN=` & `OU=` as docker doesn't handle revocation?
 
 
 ### Handler index
