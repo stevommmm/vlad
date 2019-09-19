@@ -114,7 +114,7 @@ vampire jokes to work into readme
 - [x] [/networks/create:post](vlad/validators/networks_create.py)
 - [ ] /networks/{id}/connect:post
 - [ ] /networks/{id}/disconnect:post
-- [ ] /networks/prune:post
+- [x] [/networks/prune:post](vlad/validators/networks_prune.py)
 - [x] [/plugins:get](vlad/validators/plugins.py)
 - [x] [/plugins/privileges:get](vlad/validators/plugins.py)
 - [x] [/plugins/pull:post](vlad/validators/plugins.py)
@@ -142,15 +142,15 @@ vampire jokes to work into readme
 - [x] [/services/{id}/update:post](vlad/validators/services_OU_update.py)
 - [x] [/services/{id}/logs:get](vlad/validators/services_OU_logs.py)
 - [x] [/tasks:get](vlad/validators/tasks.py)
-- [ ] /tasks/{id}:get
+- [ ] [/tasks/{id}:get](vlad/validators/tasks_get.py)
 - [ ] /tasks/{id}/logs:get
 - [x] [/secrets:get](vlad/validators/secrets.py)
-- [ ] /secrets/create:post
-- [ ] /secrets/{id}:get
-- [ ] /secrets/{id}/update:post
+- [x] [/secrets/create:post](vlad/validators/secrets_create.py)
+- [x] [/secrets/{id}:get](vlad/validators/secrets_OU_get.py)
+- [x] [/secrets/{id}/update:post](vlad/validators/secrets_OU_update.py)
 - [x] [/configs:get](vlad/validators/configs.py)
-- [ ] /configs/create:post
-- [ ] /configs/{id}:get
-- [ ] /configs/{id}/update:post
+- [x] [/configs/create:post](vlad/validators/configs_create.py)
+- [x] [/configs/{id}:get](vlad/validators/configs_OU_get.py)
+- [x] [/configs/{id}/update:post](vlad/validators/configs_OU_update.py)
 - [ ] /distribution/{name}/json:get
 - [ ] /session:post

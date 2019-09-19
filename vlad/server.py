@@ -21,8 +21,8 @@ async def pre_docker(request: web.Request):
         logger.debug(req)
         try:
             tasks = []
-            for m in [x for x in dir(validators) if not x.startswith('__')]:
-                tasks.append(getattr(validators, m).validate_request(req))
+            for func in request.app['validators']['request']:
+                tasks.append(func(req))
 
             results = await asyncio.gather(*tasks)
 
@@ -48,16 +48,46 @@ async def pre_docker(request: web.Request):
 async def post_docker(request: web.Request):
     '''This authorize response method is called before the response is returned from Docker daemon to the client.'''
     data = await request.json()
-    async with DockerResponse(data) as req:
+    async with DockerResponse(data) as res:
         # We'll only deal with TLS enabled requests
-        if not req.is_tls_auth:
+        if not res.is_tls_auth:
             return web.json_response({'Allow': True})
+
+        logger.debug(res)
+        try:
+            tasks = []
+            for func in request.app['validators']['response']:
+                tasks.append(func(res))
+
+            results = await asyncio.gather(*tasks)
+
+            # for responses we only deny if someone explicitly says so
+            for response in results:
+                if response:
+                    return web.json_response({'Allow': False, 'Msg': response})
+
+        except Exception as e:
+            return web.json_response({'Allow': False, 'Msg': repr(e)})
 
     return web.json_response({'Allow': True})
 
 
+def _fetch_validators():
+    _req = []
+    _res = []
+    for m in [getattr(validators, x) for x in dir(validators) if not x.startswith('__')]:
+        if hasattr(m, 'validate_request'):
+            _req.append(m.validate_request)
+        if hasattr(m, 'validate_response'):
+            _res.append(m.validate_response)
+
+    logger.info("Found %d request, %d response validators...", len(_req), len(_res))
+    return {'request': _req, 'response': _res}
+
+
 def make_app():
     app = web.Application()
+    app['validators'] = _fetch_validators()
     app.router.add_post("/Plugin.Activate", plugin_activate)
     app.router.add_post("/AuthZPlugin.AuthZReq", pre_docker)
     app.router.add_post("/AuthZPlugin.AuthZRes", post_docker)

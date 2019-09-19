@@ -1,20 +1,21 @@
-# handles: /networks/{id}:get
+# handles: /configs/{id}:get
+
 
 async def validate_request(req):
-    '''Allow inspecting networks in the OU prefix'''
+    '''Allow inspecting configs within the OU'''
     url_parts = req.req_target.split('/')
     if (
         req.req_method == 'GET'
         and len(url_parts) == 3
         and url_parts[0] == ''
-        and url_parts[1] == 'networks'
+        and url_parts[1] == 'configs'
     ):
         if url_parts[2].startswith(req.OU_prefix):
             return True
 
         # Check ID based lookups
-        r_net = await req.resolve_network(url_parts[2])
-        if r_net and r_net.startswith(req.OU_prefix):
+        r_conf = await req.resolve_config(url_parts[2])
+        if r_conf and r_conf.startswith(req.OU_prefix):
             return True
 
-        return 'That network is outside your OU prefix.'
+        return 'That config is outside your OU prefix.'

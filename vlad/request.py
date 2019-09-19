@@ -56,8 +56,10 @@ class DockerRequest:
 
         async with self._session.get(f'http://localhost/{path}/{uid}') as resp:
             data = await resp.json()
-            if 'Name' in data:
+            if 'Name' in data:  # vol net
                 return data['Name']
+            if 'Spec' in data and 'Name' in data['Spec']:  # svc
+                return data['Spec']['Name']
             return None
 
     async def __aenter__(self):
@@ -75,25 +77,28 @@ class DockerRequest:
     def OU_prefix(self):
         return tuple(self.req_oids['OU'])
 
-    @property
-    def OU_vol_prefix(self):
-        return tuple(f"/volumes/{bg}" for bg in self.OU_prefix)
-
-    @property
-    def OU_svc_prefix(self):
-        return tuple(f"/services/{bg}" for bg in self.OU_prefix)
-
-    @property
-    def OU_net_prefix(self):
-        return tuple(f"/networks/{bg}" for bg in self.OU_prefix)
-
     def __repr__(self):
         return f"<Request {self.req_method}:{self.req_target} ({','.join(self.req_oids['OU'])})>"
 
-    async def resolve_network(self):
-        logger.debug('Call to resolve ID')
-        url_parts = self.req_target.split('/')
-        return await self._docker_resolve('networks', url_parts[2])
+    async def resolve_network(self, uid):
+        logger.debug('Call to resolve ID for networks')
+        return await self._docker_resolve('networks', uid)
+
+    async def resolve_volume(self, uid):
+        logger.debug('Call to resolve ID for volumes')
+        return await self._docker_resolve('volumes', uid)
+
+    async def resolve_service(self, uid):
+        logger.debug('Call to resolve ID for services')
+        return await self._docker_resolve('services', uid)
+
+    async def resolve_secret(self, uid):
+        logger.debug('Call to resolve ID for secrets')
+        return await self._docker_resolve('secrets', uid)
+
+    async def resolve_config(self, uid):
+        logger.debug('Call to resolve ID for configs')
+        return await self._docker_resolve('configs', uid)
 
 
 class DockerResponse(DockerRequest):
@@ -110,7 +115,7 @@ class DockerResponse(DockerRequest):
         self.res_code = data.get('ResponseStatusCode', None)
 
     def __repr__(self):
-        return f"<Response {self.req_method} : {self.req_target} : {','.join(self.req_oids['OU'])}>"
+        return f"<Response {self.req_method}:{self.req_target} ({','.join(self.req_oids['OU'])})>"
 
 
 def _json_b64(blob):
