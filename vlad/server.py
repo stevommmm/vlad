@@ -1,4 +1,5 @@
 from . import validators
+from .validators import import_validators
 from . import DockerRequest, DockerResponse
 from aiohttp import web
 import asyncio
@@ -75,6 +76,7 @@ async def post_docker(request: web.Request):
 def _fetch_validators():
     _req = []
     _res = []
+    import_validators()
     for m in [getattr(validators, x) for x in dir(validators) if not x.startswith('__')]:
         if hasattr(m, 'validate_request'):
             _req.append(m.validate_request)
