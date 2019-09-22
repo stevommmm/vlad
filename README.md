@@ -12,8 +12,9 @@ Request/Response *vladidators* all come from `validators/` and are responsible f
 Requests are **default deny**, Response is default allow.
 
 
-Each validator implements eithor/both the following function templates
+Each validator implements either/both the following function templates
 ```python
+@handles('POST', '', 'configs', 'create')
 async def validate_request(req: DockerRequest) -> Union[None, str, bool]:
     pass
 
@@ -56,7 +57,7 @@ sudo docker info  # Uses existing unix socket (which is blanket allowed by vlad)
 
 - [ ] work more vampire jokes to work into readme
 - [ ] echo OUs back to clients when bad prefix
-    > standardise response messages
+    > standardize response messages
 - [ ] certificate revocation for clients
     > decline via `CN=` & `OU=` as docker doesn't handle revocation?
 
