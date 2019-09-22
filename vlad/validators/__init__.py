@@ -22,6 +22,7 @@ def handles(method: str, *args: str):
 
     return wrapper
 
+
 def import_validators():
     for mod in Path(__file__).parent.iterdir():
         if mod.suffix == '.py' and mod.stem != '__init__':

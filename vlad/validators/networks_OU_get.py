@@ -1,5 +1,6 @@
 # handles: /networks/{id}:get
 
+
 async def validate_request(req):
     '''Allow inspecting networks in the OU prefix'''
     url_parts = req.req_target.split('/')

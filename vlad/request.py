@@ -102,11 +102,7 @@ class DockerRequest:
 
 
 class DockerResponse(DockerRequest):
-    __slots__ = (
-        'res_body',
-        'res_header',
-        'res_code',
-    )
+    __slots__ = ('res_body', 'res_header', 'res_code')
 
     def __init__(self, data: dict = {}):
         super().__init__(data)

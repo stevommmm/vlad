@@ -8,9 +8,7 @@ def check_task(req):
     if req.req_body and 'TaskTemplate' in req.req_body:
         if 'ContainerSpec' in req.req_body['TaskTemplate']:
             if 'Mounts' in req.req_body['TaskTemplate']['ContainerSpec']:
-                for mount in req.req_body['TaskTemplate']['ContainerSpec'][
-                    'Mounts'
-                ]:
+                for mount in req.req_body['TaskTemplate']['ContainerSpec']['Mounts']:
                     if mount.get('Type', '').lower() == 'bind':
                         return 'You cannot bind mount.'
     # If the req is in the OU and has no bind mounts we're good

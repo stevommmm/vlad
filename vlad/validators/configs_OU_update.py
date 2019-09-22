@@ -2,6 +2,7 @@
 
 from vlad.validators import handles
 
+
 @handles('POST', '', 'configs', '*', 'update')
 async def validate_request(req):
     '''Allow inspecting configs within the OU'''

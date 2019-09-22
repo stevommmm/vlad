@@ -7,6 +7,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 async def plugin_activate(request: web.Request):
     return web.json_response({'Implements': ['authz']})
 
@@ -77,7 +78,9 @@ def _fetch_validators():
     _req = []
     _res = []
     import_validators()
-    for m in [getattr(validators, x) for x in dir(validators) if not x.startswith('__')]:
+    for m in [
+        getattr(validators, x) for x in dir(validators) if not x.startswith('__')
+    ]:
         if hasattr(m, 'validate_request'):
             _req.append(m.validate_request)
         if hasattr(m, 'validate_response'):
