@@ -9,12 +9,15 @@ class handles:
     def get(*args):
         return handles.many(['GET', *args])
 
+    @staticmethod
     def post(*args):
         return handles.many(['POST', *args])
 
+    @staticmethod
     def delete(*args):
         return handles.many(['DELETE', *args])
 
+    @staticmethod
     def head(*args):
         return handles.many(['HEAD', *args])
 
