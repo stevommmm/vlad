@@ -1,26 +1,47 @@
 import functools
 from pathlib import Path
 import importlib
+from typing import List
 
 
-def handles(method: str, *args: str):
-    def wrapper(func):
-        @functools.wraps(func)
-        async def wrapped(request):
-            url_parts = request.req_target.split('/')
-            if (
-                request.req_method == method
-                and len(url_parts) == len(args)
-                and all(
-                    (url_parts[x] == args[x] or args[x] == '*')
-                    for x in range(len(args))
-                )
-            ):
-                return await func(request)
+class handles:
+    @staticmethod
+    def get(*args):
+        return handles.many(['GET', *args])
 
-        return wrapped
+    def post(*args):
+        return handles.many(['POST', *args])
 
-    return wrapper
+    def delete(*args):
+        return handles.many(['DELETE', *args])
+
+    def head(*args):
+        return handles.many(['HEAD', *args])
+
+    @staticmethod
+    def many(*routes: List[str]):
+        def wrapper(func):
+            @functools.wraps(func)
+            async def wrapped(request):
+                # split our url, ignore first / split
+                url_parts = request.req_target.split('/')[1:]
+                for route in routes:
+                    # Copy our list as we mutate it
+                    args = route.copy()
+                    method = args.pop(0)
+                    if (
+                        request.req_method == method
+                        and len(url_parts) == len(args)
+                        and all(
+                            (url_parts[x] == args[x] or args[x] == '*')
+                            for x in range(len(args))
+                        )
+                    ):
+                        return await func(request)
+
+            return wrapped
+
+        return wrapper
 
 
 def import_validators():

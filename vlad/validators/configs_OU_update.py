@@ -3,7 +3,7 @@
 from vlad.validators import handles
 
 
-@handles('POST', '', 'configs', '*', 'update')
+@handles.post('configs', '*', 'update')
 async def validate_request(req):
     '''Allow inspecting configs within the OU'''
     url_parts = req.req_target.split('/')
