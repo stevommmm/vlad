@@ -6,8 +6,18 @@
 # handles: /swarm/unlockkey:get
 # handles: /swarm/unlock:post
 
+from vlad.validators import handles
 
+
+@handles.many(
+    ['GET', 'swarm'],
+    ['POST', 'swarm', 'init'],
+    ['POST', 'swarm', 'join'],
+    ['POST', 'swarm', 'leave'],
+    ['POST', 'swarm', 'update'],
+    ['GET', 'swarm', 'unlockkey'],
+    ['POST', 'swarm', 'unlock'],
+)
 async def validate_request(req):
     '''Deny all swarm modifications over TLS'''
-    if req.req_target.startswith('/swarm'):
-        return 'You cannot interact with swarm over this connection.'
+    return 'You cannot interact with swarm over this connection.'

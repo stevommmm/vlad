@@ -1,7 +1,9 @@
 # handles: /volumes/prune:post
 
+from vlad.validators import handles
 
+
+@handles.post('volumes', 'prune')
 async def validate_request(req):
     '''explicit block `docker volume prune`'''
-    if req.req_method == 'POST' and req.req_target == '/volumes/prune':
-        return 'You cannot globally prune volumes.'
+    return 'You cannot globally prune volumes.'

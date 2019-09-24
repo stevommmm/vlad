@@ -10,8 +10,22 @@
 # handles: /plugins/{name}/push:post
 # handles: /plugins/{name}/set:post
 
+from vlad.validators import handles
 
+
+@handles.many(
+    ['GET', 'plugins'],
+    ['GET', 'plugins', 'privileges'],
+    ['POST', 'plugins', 'pull'],
+    ['GET', 'plugins', '*', 'json'],
+    ['DELETE', 'plugins', '*'],
+    ['POST', 'plugins', '*', 'enable'],
+    ['POST', 'plugins', '*', 'disable'],
+    ['POST', 'plugins', '*', 'upgrade'],
+    ['POST', 'plugins', 'create'],
+    ['POST', 'plugins', '*', 'push'],
+    ['POST', 'plugins', '*', 'set'],
+)
 async def validate_request(req):
     '''Deny all plugin interaction over TLS'''
-    if req.req_target.startswith('/plugins'):
-        return 'You cannot interact with swarm over this connection.'
+    return 'You cannot interact with swarm over this connection.'

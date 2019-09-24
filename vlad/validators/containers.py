@@ -24,8 +24,35 @@
 
 # handles: /containers/{id}/exec:post
 
+from vlad.validators import handles
 
+
+@handles.many(
+    ['GET', 'containers', 'json'],
+    ['POST', 'containers', 'create'],
+    ['GET', 'containers', '*', 'json'],
+    ['GET', 'containers', '*', 'top'],
+    ['GET', 'containers', '*', 'logs'],
+    ['GET', 'containers', '*', 'changes'],
+    ['GET', 'containers', '*', 'export'],
+    ['GET', 'containers', '*', 'stats'],
+    ['POST', 'containers', '*', 'resize'],
+    ['POST', 'containers', '*', 'start'],
+    ['POST', 'containers', '*', 'stop'],
+    ['POST', 'containers', '*', 'restart'],
+    ['POST', 'containers', '*', 'kill'],
+    ['POST', 'containers', '*', 'update'],
+    ['POST', 'containers', '*', 'rename'],
+    ['POST', 'containers', '*', 'pause'],
+    ['POST', 'containers', '*', 'unpause'],
+    ['POST', 'containers', '*', 'attach'],
+    ['GET', 'containers', '*', 'attach/ws'],
+    ['POST', 'containers', '*', 'wait'],
+    ['DELETE', 'containers', '*'],
+    ['HEAD', 'containers', '*', 'archive'],
+    ['POST', 'containers', 'prune'],
+    ['POST', 'containers', '*', 'exec'],
+)
 async def validate_request(req):
     '''Deny all host specific containers over TLS'''
-    if req.req_target.startswith('/containers/'):
-        return 'You cannot interact with host containers over this connection.'
+    return 'You cannot interact with host containers over this connection.'

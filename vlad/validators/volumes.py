@@ -1,7 +1,9 @@
 # handles: /volumes:get
 
+from vlad.validators import handles
 
+
+@handles.get('volumes')
 async def validate_request(req):
     '''Allow indexing volumes'''
-    if req.req_method == 'GET' and req.req_target == '/volumes':
-        return True
+    return True

@@ -1,7 +1,9 @@
 # handles: /networks:get
 
+from vlad.validators import handles
 
+
+@handles.get('networks')
 async def validate_request(req):
     '''Allow indexing networks'''
-    if req.req_method == 'GET' and req.req_target == '/networks':
-        return True
+    return True

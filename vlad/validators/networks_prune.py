@@ -1,7 +1,9 @@
 # handles: /networks/prune:post
 
+from vlad.validators import handles
 
+
+@handles.post('networks', 'prune')
 async def validate_request(req):
     '''Allow indexing networks'''
-    if req.req_method == 'POST' and req.req_target == '/networks/prune':
-        return 'You cannot globally prune networks.'
+    return 'You cannot globally prune networks.'

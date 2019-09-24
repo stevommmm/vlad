@@ -10,8 +10,23 @@
 # handles: /images/{name}/get:get
 # handles: /images/get:get
 # handles: /images/load:post
+from vlad.validators import handles
 
 
+@handles.many(
+    ['GET', 'images', 'json'],
+    ['POST', 'images', 'create'],
+    ['GET', 'images', '*', 'json'],
+    ['GET', 'images', '*', 'history'],
+    ['POST', 'images', '*', 'push'],
+    ['POST', 'images', '*', 'tag'],
+    ['DELETE', 'images', '*'],
+    ['GET', 'images', 'search'],
+    ['POST', 'images', 'prune'],
+    ['GET', 'images', '*', 'get'],
+    ['GET', 'images', 'get'],
+    ['POST', 'images', 'load'],
+)
 async def validate_request(req):
     '''Deny image interaction over tls'''
     if req.req_target.startswith('/images/'):
