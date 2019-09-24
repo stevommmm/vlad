@@ -21,7 +21,7 @@ plugin: $(IMAGE_NAME)
 
 refresh: clean
 	@docker plugin disable -f $(PLUGIN_NAME)
-	@docker plugin rm -f vlad
+	@docker plugin rm -f $(PLUGIN_NAME)
 	$(MAKE) plugin
 	docker plugin enable $(PLUGIN_NAME)
 	systemctl restart docker
