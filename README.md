@@ -3,6 +3,9 @@
 PoC at implementing TLS Certificate `CN=` and `OU=` access to resources via an authz plugin
 
 
+/!\ Super early days, we live in master.
+
+
 Request/Response *vladidators* all come from `validators/` and are responsible for:
 
 - explicitly allowing a request with a `True` value
@@ -40,6 +43,17 @@ openssl req -subj '/CN=client/OU=groupname' -new -key key.pem -out client.csr
 
 ### Installation
 
+```bash
+docker plugin install c45y/vlad --alias vlad
+```
+
+And add `vlad` to your `authorization-plugins` configuration in `daemon.json`.
+
+At the moment there are no fancy toggle or configuration for you to worry about, yay?
+
+
+### Development Installation
+
 From your command line:
 
 ```bash
@@ -55,11 +69,14 @@ sudo docker info  # Uses existing unix socket (which is blanket allowed by vlad)
 
 #### todo
 
+- [ ] test suite
 - [ ] work more vampire jokes to work into readme
 - [ ] echo OUs back to clients when bad prefix
     > standardize response messages
 - [ ] certificate revocation for clients
     > decline via `CN=` & `OU=` as docker doesn't handle revocation?
+- [ ] configuration options
+    > enable port binding / bind mounts / toggle random allow/block features
 
 
 ### Handler index

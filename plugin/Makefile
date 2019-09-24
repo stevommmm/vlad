@@ -1,5 +1,6 @@
 CONTAINER_NAME:=vlad
 IMAGE_NAME:=rootfsimage
+PLUGIN_NAME:=c45y/vlad
 
 default: plugin
 
@@ -15,14 +16,14 @@ $(IMAGE_NAME):
 	docker export $(CONTAINER_NAME) | tar -x -C rootfs
 
 plugin: $(IMAGE_NAME)
-	docker plugin create vlad .
+	docker plugin create $(PLUGIN_NAME) .
 
 
 refresh: clean
-	@docker plugin disable -f vlad
+	@docker plugin disable -f $(PLUGIN_NAME)
 	@docker plugin rm -f vlad
 	$(MAKE) plugin
-	docker plugin enable vlad
+	docker plugin enable $(PLUGIN_NAME)
 	systemctl restart docker
 
 
