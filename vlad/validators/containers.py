@@ -50,6 +50,8 @@ from vlad.validators import handles
     ['POST', 'containers', '*', 'wait'],
     ['DELETE', 'containers', '*'],
     ['HEAD', 'containers', '*', 'archive'],
+    ['PUT', 'containers', '*', 'archive'],
+    ['GET', 'containers', '*', 'archive'],
     ['POST', 'containers', 'prune'],
     ['POST', 'containers', '*', 'exec'],
 )
