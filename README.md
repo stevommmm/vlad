@@ -6,7 +6,9 @@ PoC at implementing TLS Certificate `CN=` and `OU=` access to resources via an a
 /!\ Super early days, we live in master.
 
 
-Request/Response *vladidators* all come from `validators/` and are responsible for:
+Default Request/Response *vladidators* all come from `validators/`, though the list can be mutated via the `make_app()` `['validators']` attribute.
+
+Request validators have the choice of:
 
 - explicitly allowing a request with a `True` value
 - explicitly denying a request with a `str` denial message to be passed to the client
@@ -17,13 +19,15 @@ Requests are **default deny**, Response is default allow.
 
 Each validator implements either/both the following function templates
 ```python
-@handles('POST', '', 'configs', 'create')
+@handles.post('configs', 'create')
 async def validate_request(req: DockerRequest) -> Union[None, str, bool]:
     pass
 
 async def validate_response(res: DockerResponse) -> Union[None, str]:
     pass
 ```
+
+The `handles` decorator implements structured filtering to the validation functions. Check [vlad/validators/](vlad/validators/) for extensive usage examples.
 
 
 ### Certificate requirements

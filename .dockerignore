@@ -1,0 +1,6 @@
+README.md
+hooks/*
+scripts/*
+pyproject.toml
+LICENSE.txt
+.gitignore
