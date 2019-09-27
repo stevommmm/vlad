@@ -57,10 +57,12 @@ At the moment there are no fancy toggle or configuration for you to worry about,
 From your command line:
 
 ```bash
-pushd plugin/
-make plugin  # Build the plugin on the local daemon, no push
+docker build -t rootfsimage .
+docker create --name vlad_container rootfsimage true
+mkdir -p rootfs
+docker export vlad_container | tar -x -C rootfs
+docker plugin create vlad .
 docker plugin enable vlad:latest  # Enable our dev plugin
-popd
 sudo ./scripts/deploy.sh  # Generate docker CA/Node/Client certificates and deploy daemon.json
 sudo ./scripts/docker.sh info  # Uses the client certificate via TLS + vlad authz
 sudo docker info  # Uses existing unix socket (which is blanket allowed by vlad)
