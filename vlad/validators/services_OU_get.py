@@ -15,4 +15,4 @@ async def validate_request(req):
     if r_svc and r_svc.startswith(req.OU_prefix):
         return True
 
-    return f'That service is outside your OU prefix. ({req.OU_prefix})'
+    return f'That service is outside your OU prefix. {req.OU_prefix}'

@@ -24,4 +24,4 @@ async def validate_response(res):
         if r_svc and r_svc.startswith(res.OU_prefix):
             return
 
-    return f'That task is outside your OU prefix. ({res.OU_prefix})'
+    return f'That task is outside your OU prefix. {res.OU_prefix}'

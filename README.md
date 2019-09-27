@@ -77,7 +77,7 @@ sudo docker info  # Uses existing unix socket (which is blanket allowed by vlad)
 
 - [ ] test suite
 - [ ] work more vampire jokes to work into readme
-- [ ] echo OUs back to clients when bad prefix
+- [x] echo OUs back to clients when bad prefix
     > standardize response messages
 - [ ] certificate revocation for clients
     > decline via `CN=` & `OU=` as docker doesn't handle revocation?

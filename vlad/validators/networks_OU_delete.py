@@ -15,4 +15,4 @@ async def validate_request(req):
     if r_net and r_net.startswith(req.OU_prefix):
         return True
 
-    return f'That network is outside your OU prefix. ({req.OU_prefix})'
+    return f'That network is outside your OU prefix. {req.OU_prefix}'

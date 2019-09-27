@@ -15,4 +15,4 @@ async def validate_request(req):
     if r_vol and r_vol.startswith(req.OU_prefix):
         return True
 
-    return f'That volume is outside your OU prefix. ({req.OU_prefix})'
+    return f'That volume is outside your OU prefix. {req.OU_prefix}'
