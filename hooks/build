@@ -1,5 +1,6 @@
 #!/bin/bash
 docker build -t rootfsimage .
 docker create --name vlad_container rootfsimage true
+mkdir -p rootfs
 docker export vlad_container | tar -x -C rootfs
 docker plugin create c45y/vlad .
