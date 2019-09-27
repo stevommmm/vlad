@@ -1,0 +1,2 @@
+#!/bin/bash
+docker plugin push c45y/vlad
