@@ -9,4 +9,4 @@ async def validate_request(req):
     if req.req_body['Name'].startswith(req.OU_prefix):
         return True
 
-    return 'That secret is outside your OU prefix.'
+    return f'That secret is outside your OU prefix. ({req.OU_prefix})'

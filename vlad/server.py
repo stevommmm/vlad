@@ -4,6 +4,7 @@ from . import DockerRequest, DockerResponse
 from aiohttp import web
 import asyncio
 import logging
+import uuid
 
 logger = logging.getLogger(__name__)
 
@@ -40,11 +41,23 @@ async def pre_docker(request: web.Request):
         # For some reason someone has a problem, deny the request
         # @todo dont expose internal error messages to clients
         except Exception as e:
-            return web.json_response({'Allow': False, 'Msg': repr(e)})
+            uu = uuid.uuid4().hex
+            logger.warning("%s catch %r", uu, e)
+            return web.json_response(
+                {
+                    'Allow': False,
+                    'Msg': f"Server error, contact your administrator with code '{uu}'.",
+                }
+            )
 
     # If none of the validators have given us a green light fail the request
     # @todo add meaningful contact your admin blurb
-    return web.json_response({'Allow': False})
+    return web.json_response(
+        {
+            'Allow': False,
+            'Msg': 'That action is not specifically allowed. Contact your administrator.',
+        }
+    )
 
 
 async def post_docker(request: web.Request):

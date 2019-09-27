@@ -15,4 +15,4 @@ async def validate_request(req):
     if r_conf and r_conf.startswith(req.OU_prefix):
         return True
 
-    return 'That config is outside your OU prefix.'
+    return f'That config is outside your OU prefix. ({req.OU_prefix})'

@@ -14,4 +14,4 @@ from vlad.validators import handles
 )
 async def validate_request(req):
     '''Deny exec interactions over TLS'''
-    return 'You cannot interact with host containers over this connection.'
+    return 'You cannot interact with host containers over a TLS connection.'

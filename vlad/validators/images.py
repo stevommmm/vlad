@@ -29,5 +29,4 @@ from vlad.validators import handles
 )
 async def validate_request(req):
     '''Deny image interaction over tls'''
-    if req.req_target.startswith('/images/'):
-        return 'You cannot interact with images over TLS.'
+    return 'You cannot interact with images over a TLS connection.'

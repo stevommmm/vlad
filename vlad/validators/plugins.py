@@ -28,4 +28,4 @@ from vlad.validators import handles
 )
 async def validate_request(req):
     '''Deny all plugin interaction over TLS'''
-    return 'You cannot interact with swarm over this connection.'
+    return 'You cannot interact with plugins over a TLS connection.'

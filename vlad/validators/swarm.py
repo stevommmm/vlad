@@ -20,4 +20,4 @@ from vlad.validators import handles
 )
 async def validate_request(req):
     '''Deny all swarm modifications over TLS'''
-    return 'You cannot interact with swarm over this connection.'
+    return 'You cannot interact with swarm over a TLS connection.'

@@ -8,7 +8,7 @@ async def validate_request(req):
     '''Allow inspecting configs within the OU'''
     url_parts = req.req_target.split('/')
     if not req.req_body['Name'].startswith(req.OU_prefix):
-        return 'That config is outside your OU prefix.'
+        return f'That config is outside your OU prefix. ({req.OU_prefix})'
 
     if url_parts[2].startswith(req.OU_prefix):
         return True
@@ -18,4 +18,4 @@ async def validate_request(req):
     if r_sec and r_sec.startswith(req.OU_prefix):
         return True
 
-    return 'That config is outside your OU prefix.'
+    return f'That config is outside your OU prefix. ({req.OU_prefix})'

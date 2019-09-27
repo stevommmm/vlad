@@ -15,4 +15,4 @@ async def validate_request(req):
     if r_sec and r_sec.startswith(req.OU_prefix):
         return True
 
-    return 'That secret is outside your OU prefix.'
+    return f'That secret is outside your OU prefix. ({req.OU_prefix})'

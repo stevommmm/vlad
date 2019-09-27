@@ -7,7 +7,7 @@ from vlad.validators import handles
 async def validate_request(req):
     '''Allow creation of services in our OU without binds'''
     if not req.req_body['Name'].startswith(req.OU_prefix):
-        return 'That service is outside your OU prefix.'
+        return f'That service is outside your OU prefix. ({req.OU_prefix})'
     # Explicitly check for bind mounts because no thx
     if req.req_body and 'TaskTemplate' in req.req_body:
         if 'ContainerSpec' in req.req_body['TaskTemplate']:
