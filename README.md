@@ -2,7 +2,7 @@
 
 :warning: Super early days, we live in master. Vlad is still young and subject to change.
 
-Vlad forces client interactions to be limited to the resources prefixed with the same `OU=` as the user TLS certificate. With `OU=tst` I could interact with service `tst_thing` and `tstthing` but not `different_service`. The same principle holds for networks and volumes and every other resource type. A *public* OU is automatically added for all clients.
+Vlad forces client interactions to be limited to the resources prefixed with the same `OU=` as the user TLS certificate. With `OU=tst` I could interact with service `tst_thing` and `tstthing` but not `different_service`. The same principle holds for networks, volumes and every other resource type. A *public* OU is automatically added for all clients.
 
 Because we can't mutate the response to the client, global indexing is allowed, but deletion, inspection, update, etc is restricted to the client OU prefix.
 
@@ -13,7 +13,7 @@ Because we can't mutate the response to the client, global indexing is allowed, 
 
 Following along with <https://docs.docker.com/engine/security/https/> we need to make a slight modification to the client certificate signing request.
 
-At the line
+The line
 ```bash
 openssl req -subj '/CN=client' -new -key key.pem -out client.csr
 ```
@@ -30,9 +30,9 @@ openssl req -subj '/CN=client/OU=groupname' -new -key key.pem -out client.csr
 docker plugin install c45y/vlad --alias vlad
 ```
 
-And add `vlad` to your `authorization-plugins` configuration in `daemon.json`.
+To complete, add `vlad` to your `authorization-plugins` configuration in `daemon.json`.
 
-At the moment there are no fancy toggle or configuration for you to worry about, yay?
+At the moment there are no fancy toggle or configurations for you to worry about - yay?
 
 
 ### Development Installation
