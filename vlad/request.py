@@ -22,11 +22,14 @@ class DockerRequest:
         'req_oids',
         'req_target',
         '_session',
+        'opts',
     )
 
-    def __init__(self, data: dict = {}):
+    def __init__(self, data: dict = {}, opts: dict = {}):
         self.user = data.get('User', None)
         self.user_auth_method = data.get('UserAuthNMethod', None)
+        self.opts = opts  # pass in any user supplied toggles
+
         self.req_oids = defaultdict(list)
         self.req_oids['OU'] += ['public']
         if self.user_auth_method == 'TLS':
@@ -104,8 +107,8 @@ class DockerRequest:
 class DockerResponse(DockerRequest):
     __slots__ = ('res_body', 'res_header', 'res_code')
 
-    def __init__(self, data: dict = {}):
-        super().__init__(data)
+    def __init__(self, data: dict = {}, opts: dict = {}):
+        super().__init__(data, opts)
         self.res_body = _json_b64(data.get('ResponseBody', None))
         self.res_header = data.get('ResponseHeader', None)
         self.res_code = data.get('ResponseStatusCode', None)

@@ -32,7 +32,16 @@ docker plugin install c45y/vlad --alias vlad
 
 To complete, add `vlad` to your `authorization-plugins` configuration in `daemon.json`.
 
-At the moment there are no fancy toggle or configurations for you to worry about - yay?
+A small number of plugin configuration options can be toggled:
+
+- `VLAD_BIND_MOUNT` sets the ability to perform host bind mounts, default **false**
+- `VLAD_BIND_PORTS` toggles port binding outside the 30000-61000 range, default **false**
+
+Current configuration can be seen using:
+
+```bash
+docker plugin inspect -f {{.Settings.Env}} vlad
+```
 
 
 ### Development Installation
@@ -61,7 +70,7 @@ sudo docker info  # Uses existing unix socket (which is blanket allowed by vlad)
     > standardize response messages
 - [ ] certificate revocation for clients
     > decline via `CN=` & `OU=` as docker doesn't handle revocation?
-- [ ] configuration options
+- [x] configuration options
     > enable port binding / bind mounts / toggle random allow/block features
 
 

@@ -1,5 +1,4 @@
 env/
-certs/
 *.pyc
 stack.yaml
-
+rootfs/

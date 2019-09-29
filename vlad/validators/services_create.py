@@ -9,7 +9,7 @@ async def validate_request(req):
     if not req.req_body['Name'].startswith(req.OU_prefix):
         return f'That service is outside your OU prefix. {req.OU_prefix}'
     # Explicitly check for bind mounts because no thx
-    if req.req_body and 'TaskTemplate' in req.req_body:
+    if not req.opts['bind_mount'] and req.req_body and 'TaskTemplate' in req.req_body:
         if 'ContainerSpec' in req.req_body['TaskTemplate']:
             if 'Mounts' in req.req_body['TaskTemplate']['ContainerSpec']:
                 for mount in req.req_body['TaskTemplate']['ContainerSpec']['Mounts']:
@@ -17,7 +17,7 @@ async def validate_request(req):
                         return 'You cannot bind mount.'
 
     # Stop port bindings to maybe important ports
-    if req.req_body and 'EndpointSpec' in req.req_body:
+    if not req.opts['bind_ports'] and req.req_body and 'EndpointSpec' in req.req_body:
         if 'Ports' in req.req_body['EndpointSpec']:
             for port in req.req_body['EndpointSpec']['Ports']:
                 if 'PublishedPort' in port:

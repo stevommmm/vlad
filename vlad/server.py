@@ -2,8 +2,10 @@ from . import validators
 from .validators import import_validators
 from . import DockerRequest, DockerResponse
 from aiohttp import web
+from collections import defaultdict
 import asyncio
 import logging
+import os
 import uuid
 
 logger = logging.getLogger(__name__)
@@ -16,7 +18,7 @@ async def plugin_activate(request: web.Request):
 async def pre_docker(request: web.Request):
     '''This authorize request method is called before the Docker daemon processes the client request.'''
     data = await request.json()
-    async with DockerRequest(data) as req:
+    async with DockerRequest(data, request.app['opts']) as req:
         # We'll only deal with TLS enabled requests
         if not req.is_tls_auth:
             return web.json_response({'Allow': True})
@@ -63,7 +65,7 @@ async def pre_docker(request: web.Request):
 async def post_docker(request: web.Request):
     '''This authorize response method is called before the response is returned from Docker daemon to the client.'''
     data = await request.json()
-    async with DockerResponse(data) as res:
+    async with DockerResponse(data, request.app['opts']) as res:
         # We'll only deal with TLS enabled requests
         if not res.is_tls_auth:
             return web.json_response({'Allow': True})
@@ -103,9 +105,20 @@ def _fetch_validators():
     return {'request': _req, 'response': _res}
 
 
+def parse_env_options():
+    '''Pull config options out of the environment as booleans'''
+    opts = defaultdict(lambda: False)
+    for k, v in os.environ.items():
+        if k.lower().startswith('vlad_'):
+            opts[k.lower()[5:]] = v.lower() == 'true'
+            logger.info("Found configuration option %r = %r", k.lower()[5:], v.lower())
+    return opts
+
+
 def make_app():
     app = web.Application()
     app['validators'] = _fetch_validators()
+    app['opts'] = parse_env_options()
     app.router.add_post("/Plugin.Activate", plugin_activate)
     app.router.add_post("/AuthZPlugin.AuthZReq", pre_docker)
     app.router.add_post("/AuthZPlugin.AuthZRes", post_docker)

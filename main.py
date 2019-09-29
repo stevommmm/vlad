@@ -16,7 +16,9 @@ async def serve(app):
     await runner.setup()
     try:
         # Try and open up the unix socket passed to us from systemd
-        site = web.SockSite(runner, socket.fromfd(3, socket.AF_UNIX, socket.SOCK_STREAM))
+        site = web.SockSite(
+            runner, socket.fromfd(3, socket.AF_UNIX, socket.SOCK_STREAM)
+        )
         await site.start()
         logging.info("Using systemd socket activation")
     except:

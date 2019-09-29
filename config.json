@@ -28,10 +28,31 @@
             "Source": "/run/docker/plugins/",
             "Destination": "/run/docker/plugins/",
             "Type": "bind",
-            "Options": ["rbind", "rw"]
+            "Options": [
+                "rbind",
+                "rw"
+            ]
         }
     ],
     "Network": {
         "Type": ""
-    }
+    },
+    "Env": [
+        {
+            "Name": "VLAD_BIND_MOUNT",
+            "Description": "Enable host bind mounts through service configurations",
+            "settable": [
+                "value"
+            ],
+            "value": "false"
+        },
+        {
+            "Name": "VLAD_BIND_PORTS",
+            "Description": "Enable port binding outside the 30000-61000 range",
+            "settable": [
+                "value"
+            ],
+            "value": "false"
+        }
+    ]
 }
