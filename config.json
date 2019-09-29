@@ -1,6 +1,6 @@
 {
     "description": "TLS OU= based RBAC",
-    "documentation": "https://example.com",
+    "documentation": "https://github.com/stevommmm/vlad",
     "entrypoint": [
         "/usr/local/bin/python",
         "-u",
