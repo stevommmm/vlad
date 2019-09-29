@@ -1,40 +1,19 @@
 # Vlad *the validator* 🧛
 
-PoC at implementing TLS Certificate `CN=` and `OU=` access to resources via an authz plugin
+:warning: Super early days, we live in master. Vlad is still young and subject to change.
 
+Vlad forces client interactions to be limited to the resources prefixed with the same `OU=` as the user TLS certificate. With `OU=tst` I could interact with service `tst_thing` and `tstthing` but not `different_service`. The same principle holds for networks, volumes and every other resource type. A *public* OU is automatically added for all clients.
 
-/!\ Super early days, we live in master.
+Because we can't mutate the response to the client, global indexing is allowed, but deletion, inspection, update, etc is restricted to the client OU prefix.
 
-
-Default Request/Response *vladidators* all come from `validators/`, though the list can be mutated via the `make_app()` `['validators']` attribute.
-
-Request validators have the choice of:
-
-- explicitly allowing a request with a `True` value
-- explicitly denying a request with a `str` denial message to be passed to the client
-- doing absolutely nothing (`None`)
-
-Requests are **default deny**, Response is default allow.
-
-
-Each validator implements either/both the following function templates
-```python
-@handles.post('configs', 'create')
-async def validate_request(req: DockerRequest) -> Union[None, str, bool]:
-    pass
-
-async def validate_response(res: DockerResponse) -> Union[None, str]:
-    pass
-```
-
-The `handles` decorator implements structured filtering to the validation functions. Check [vlad/validators/](vlad/validators/) for extensive usage examples.
+[Installation](#installation) | [Development](#development-installation) | [Docker Hub](https://hub.docker.com/r/c45y/vlad)
 
 
 ### Certificate requirements
 
 Following along with <https://docs.docker.com/engine/security/https/> we need to make a slight modification to the client certificate signing request.
 
-At the line
+The line
 ```bash
 openssl req -subj '/CN=client' -new -key key.pem -out client.csr
 ```
@@ -51,9 +30,9 @@ openssl req -subj '/CN=client/OU=groupname' -new -key key.pem -out client.csr
 docker plugin install c45y/vlad --alias vlad
 ```
 
-And add `vlad` to your `authorization-plugins` configuration in `daemon.json`.
+To complete, add `vlad` to your `authorization-plugins` configuration in `daemon.json`.
 
-At the moment there are no fancy toggle or configuration for you to worry about, yay?
+At the moment there are no fancy toggle or configurations for you to worry about - yay?
 
 
 ### Development Installation
@@ -73,10 +52,11 @@ sudo docker info  # Uses existing unix socket (which is blanket allowed by vlad)
 ```
 
 
-#### todo
+### Todo
 
 - [ ] test suite
-- [ ] work more vampire jokes to work into readme
+    > pytest on the handler funcs or drive a docker daemon?
+- [ ] work more vampire jokes into readme
 - [x] echo OUs back to clients when bad prefix
     > standardize response messages
 - [ ] certificate revocation for clients
@@ -84,6 +64,37 @@ sudo docker info  # Uses existing unix socket (which is blanket allowed by vlad)
 - [ ] configuration options
     > enable port binding / bind mounts / toggle random allow/block features
 
+
+### Validators
+
+Default Request/Response *vladidators* all come from `vlad.validators`, though the list can be mutated at startup if required.
+
+To implemnent custom functionality you can override/append async functions to the list of handlers indexed by `make_app`.
+
+```python
+app = make_app()
+app['validators']['request'] = [my_custom_async_func]
+```
+
+Validators have the choice of:
+
+- explicitly allowing a request with a `True` value
+- explicitly denying a request with a `str` denial message to be passed to the client
+- doing absolutely nothing (`None`)
+
+Requests are **default deny**, Response is default allow.
+
+Each validator implements either/both the following function templates
+```python
+@handles.post('configs', 'create')
+async def validate_request(req: DockerRequest) -> Union[None, str, bool]:
+    pass
+
+async def validate_response(res: DockerResponse) -> Union[None, str]:
+    pass
+```
+
+The `handles` decorator implements structured filtering to the validation functions. Check [vlad/validators/](vlad/validators/) for extensive usage examples.
 
 
 ### Handler Index:
