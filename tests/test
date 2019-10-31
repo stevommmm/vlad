@@ -1,0 +1,45 @@
+#!/bin/bash
+
+tests=0
+passed=0
+
+source ./util.sh
+
+gen_certs
+background_docker
+sleep 1
+
+for test in $(find . -type f -name 'test_*.sh'); do
+	log "Loaded ${test}."
+	. "$test"
+done
+
+for func in $(declare -F | awk '{print $NF}' | grep "check_"); do
+	log "\nCalling ${func}"
+	$"$func"
+	[ $? -eq 0 ] && let passed++
+	let tests++
+done
+
+log "\n\n==================="
+log "Completed tests: ${tests}"
+log "Passed tests:    ${passed}"
+
+# Sometimes its handy to interact wit the test environment, uncomment&go
+# while true; do
+# 	echo -n "$ "
+# 	read -e evalline
+# 	[ -z "$evalline" ] && break
+# 	eval $evalline
+# done
+
+if [ $__dockerd_pid -gt 0 ]; then
+	kill $__dockerd_pid
+	wait $__dockerd_pid
+fi
+
+[ -n "$__docker_dir" ] && rm -rf $__docker_dir
+
+sleep 1
+
+[ $passed -lt $tests ] && exit 1 || exit 0

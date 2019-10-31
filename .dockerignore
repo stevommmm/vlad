@@ -1,6 +1,9 @@
+.gitignore
+pyproject.toml
+
+LICENSE.txt
 README.md
+
 hooks/*
 scripts/*
-pyproject.toml
-LICENSE.txt
-.gitignore
+tests/*

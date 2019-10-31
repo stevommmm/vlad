@@ -2,3 +2,5 @@ env/
 *.pyc
 stack.yaml
 rootfs/
+tests/crt_*
+tests/.srl

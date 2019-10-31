@@ -1,0 +1,16 @@
+version: "3.7"
+services:
+  web:
+    image: nginx:latest
+    volumes:
+      - "meow_stuff:/lala"
+    configs:
+      - my_first_config
+
+volumes:
+  meow_stuff:
+    driver: local
+
+configs:
+  my_first_config:
+    file: ./stack.yml

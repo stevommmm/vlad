@@ -60,11 +60,42 @@ sudo ./scripts/docker.sh info  # Uses the client certificate via TLS + vlad auth
 sudo docker info  # Uses existing unix socket (which is blanket allowed by vlad)
 ```
 
+### Tests
+
+A small test harness based on the [docker-bench-security](https://github.com/docker/docker-bench-security) setup to run through known valid/invalid operations. Runs a docker daemon with vlad under a `mktemp` directory which is destroyed at the end of testing.
+
+```bash
+systemctl stop docker  # Can't have another one running
+cd test && sudo ./test
+```
+
+Output looks something like
+
+```
+Calling check_tls_volume_bad_bind
+> docker volume create --opt=type=bind --opt=device=/tmp testgroup_4711accf0672
+Error response from daemon: authorization denied by plugin c45y/vlad:latest: You cannot bind mount.
+[PASS][check_tls_volume_bad_bind]
+
+Calling check_tls_volume_bad_ou
+> docker volume create badgroup_29d63f46fa7f
+Error response from daemon: authorization denied by plugin c45y/vlad:latest: That volume is outside your OU prefix. ('public', 'testgroup')
+[PASS][check_tls_volume_bad_ou]
+
+Calling check_tls_volume_ou
+> docker volume create testgroup_3c2739947c82
+testgroup_3c2739947c82
+[PASS][check_tls_volume_ou]
+
+
+===================
+Completed tests: 11
+Passed tests:    11
+```
+
 
 ### Todo
 
-- [ ] test suite
-    > pytest on the handler funcs or drive a docker daemon?
 - [ ] work more vampire jokes into readme
 - [x] echo OUs back to clients when bad prefix
     > standardize response messages
