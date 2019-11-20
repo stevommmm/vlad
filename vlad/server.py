@@ -44,7 +44,7 @@ async def pre_docker(request: web.Request):
         # @todo dont expose internal error messages to clients
         except Exception as e:
             uu = uuid.uuid4().hex
-            logger.warning("%s catch %r", uu, e)
+            logger.exception("%s catch %r", uu, e)
             return web.json_response(
                 {
                     'Allow': False,
