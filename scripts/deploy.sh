@@ -1,5 +1,7 @@
 HOST='localhost'
 
+
+mkdir -p /etc/docker/certs
 # CA
 openssl genrsa -out /etc/docker/certs/ca.key 4096
 openssl req -x509 -new -nodes -key /etc/docker/certs/ca.key \
@@ -41,7 +43,7 @@ cat >/etc/docker/daemon.json <<EOF
     "tlscert": "/etc/docker/certs/node.crt",
     "tlskey": "/etc/docker/certs/node.key",
     "authorization-plugins": [
-        "vlad"
+        "c45y/vlad"
     ]
 }
 EOF

@@ -110,14 +110,14 @@ function background_docker() {
 	__dockerd_pid=$!
 	sleep 3
 
-	# log "Building docker plugin..."
-	# pushd .. >/dev/null
-	# build_plugin >/dev/null
-	# popd
+	log "Building docker plugin..."
+	pushd .. >/dev/null
+	build_plugin >/dev/null
+	popd
 
 	log "Enabling plugin..."
 	sock_docker plugin install c45y/vlad --grant-all-permissions
-	# sock_docker plugin enable c45y/vlad
+	sock_docker plugin enable c45y/vlad
 	sock_docker swarm init --listen-addr="127.0.0.1:${RANDOM}" --advertise-addr="127.0.0.1:${RANDOM}"
 	deploy_invalid_stack
 
