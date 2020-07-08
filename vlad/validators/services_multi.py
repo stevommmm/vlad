@@ -38,7 +38,7 @@ async def check_task(req):
 
 
 @handles.post('services', '*', 'update')
-async def validate_request(req):
+async def validate_request_update(req):
     '''Allow updating of services in our OU without binds'''
     url_parts = req.req_target.split('/')
     if url_parts[2].startswith(req.OU_prefix):
