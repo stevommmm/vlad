@@ -1,2 +1,7 @@
 #!/bin/bash
-docker plugin push c45y/vlad
+if [ "$SOURCE_BRANCH" == "master" ]; then
+	tag="latest"
+else
+	tag=$SOURCE_BRANCH
+fi
+docker plugin push c45y/vlad:$tag
