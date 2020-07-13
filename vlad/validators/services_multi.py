@@ -36,10 +36,15 @@ async def check_task(req):
     # If the req is in the OU and has no bind mounts we're good
     return True
 
-
-@handles.post('services', '*', 'update')
-async def validate_request_update(req):
+@handles.many(
+    ['POST', 'services', '*', 'update'],
+    ['POST', 'services', 'update'],
+)
+async def validate_request(req):
     '''Allow updating of services in our OU without binds'''
+    if req.req_target == '/services/create':
+        return await check_task(req)
+
     url_parts = req.req_target.split('/')
     if url_parts[2].startswith(req.OU_prefix):
         return await check_task(req)
@@ -50,9 +55,3 @@ async def validate_request_update(req):
         return await check_task(req)
 
     return f'That service is outside your OU prefix. {req.OU_prefix}'
-
-
-@handles.post('services', 'create')
-async def validate_request(req):
-    '''Allow creation of services in our OU without binds'''
-    return await check_task(req)
