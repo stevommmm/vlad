@@ -38,7 +38,7 @@ async def check_task(req):
 
 @handles.many(
     ['POST', 'services', '*', 'update'],
-    ['POST', 'services', 'update'],
+    ['POST', 'services', 'create'],
 )
 async def validate_request(req):
     '''Allow updating of services in our OU without binds'''
